@@ -8,7 +8,7 @@ gsap.registerPlugin(ScrollTrigger)
 
 const IMAGES = [
   {
-    src: 'https://mimuk-kahaani.vercel.app/images/exterior.jpg',
+    src: '/images/exterior.jpg',
     alt: 'Kahaani restaurant',
     className: 'absolute left-[2%] top-[5%] h-[200px] w-[150px] lg:h-[280px] lg:w-[210px]',
     startRotation: -20,
@@ -16,7 +16,7 @@ const IMAGES = [
     speed: -30,
   },
   {
-    src: 'https://mimuk-kahaani.vercel.app/images/momos-tikka.jpg',
+    src: '/images/momos-tikka.jpg',
     alt: 'Momos and tikka',
     className: 'absolute right-[3%] top-[2%] h-[180px] w-[140px] lg:h-[240px] lg:w-[180px]',
     startRotation: 18,
@@ -24,7 +24,7 @@ const IMAGES = [
     speed: -50,
   },
   {
-    src: 'https://mimuk-kahaani.vercel.app/images/hero-naan.jpg',
+    src: '/images/hero-naan.jpg',
     alt: 'Naan and curry',
     className: 'absolute left-[8%] bottom-[10%] h-[160px] w-[130px] lg:h-[220px] lg:w-[170px]',
     startRotation: 15,
@@ -32,7 +32,7 @@ const IMAGES = [
     speed: -20,
   },
   {
-    src: 'https://mimuk-kahaani.vercel.app/images/dessert.jpg',
+    src: '/images/dessert.jpg',
     alt: 'Kahaani dessert',
     className: 'absolute right-[5%] bottom-[8%] h-[190px] w-[150px] lg:h-[260px] lg:w-[200px]',
     startRotation: -16,

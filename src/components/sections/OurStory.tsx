@@ -26,13 +26,13 @@ const CHAPTERS: StoryChapter[] = [
     body: 'Born from a love of East Indian tradition and the bold creativity of Hakka cuisine, Kahaani is where two culinary worlds collide. Every recipe carries a tale — of family kitchens, of spice routes, of flavors perfected across generations.',
     images: [
       {
-        src: 'https://mimuk-kahaani.vercel.app/images/momos-tikka.jpg',
+        src: '/images/momos-tikka.jpg',
         alt: 'Kahaani momos and tikka',
         position: 'left-[5%] top-[15%]',
         rotation: '-rotate-6',
       },
       {
-        src: 'https://mimuk-kahaani.vercel.app/images/exterior.jpg',
+        src: '/images/exterior.jpg',
         alt: 'Kahaani restaurant exterior',
         position: 'right-[8%] top-[8%]',
         rotation: 'rotate-3',
@@ -51,13 +51,13 @@ const CHAPTERS: StoryChapter[] = [
     body: 'Our foundation is authenticity. From the tandoor clay oven to the wok, every technique is honored. We don\u2019t take shortcuts \u2014 we let time, heat, and the right spices do what they\u2019ve always done best.',
     images: [
       {
-        src: 'https://mimuk-kahaani.vercel.app/images/spring-rolls.jpg',
+        src: '/images/spring-rolls.jpg',
         alt: 'Crispy spring rolls',
         position: 'left-[3%] top-[10%]',
         rotation: 'rotate-3',
       },
       {
-        src: 'https://mimuk-kahaani.vercel.app/images/dessert.jpg',
+        src: '/images/dessert.jpg',
         alt: 'Kahaani dessert',
         position: 'right-[5%] top-[20%]',
         rotation: '-rotate-4',
@@ -281,15 +281,15 @@ export default function OurStory() {
         <div className="mx-auto grid max-w-[1200px] grid-cols-3 gap-3 lg:gap-5">
           {[
             {
-              src: 'https://mimuk-kahaani.vercel.app/images/hero-naan.jpg',
+              src: '/images/hero-naan.jpg',
               caption: 'Tradition in every flame.',
             },
             {
-              src: 'https://mimuk-kahaani.vercel.app/images/momos-tikka.jpg',
+              src: '/images/momos-tikka.jpg',
               caption: 'Spices that speak for themselves.',
             },
             {
-              src: 'https://mimuk-kahaani.vercel.app/images/spring-rolls.jpg',
+              src: '/images/spring-rolls.jpg',
               caption: 'Where East meets East.',
             },
           ].map((img) => (

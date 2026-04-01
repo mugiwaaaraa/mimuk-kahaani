@@ -11,25 +11,25 @@ const STEPS = [
     label: 'THE TANDOOR',
     heading: 'The Tandoor',
     text: 'Our clay oven burns at over 900\u00B0F \u2014 sealing in juices and creating that signature char that no conventional oven can replicate. Every tikka, every naan, every seekh kebab passes through this ancient fire.',
-    image: 'https://mimuk-kahaani.vercel.app/images/hero-naan.jpg',
+    image: '/images/hero-naan.jpg',
   },
   {
     label: 'THE SPICES',
     heading: 'The Spice Masala',
     text: 'We grind our own masalas in-house. No pre-packaged blends. Cumin, coriander, black cardamom, Kashmiri chili \u2014 each spice is toasted and ground fresh, because the difference between good and extraordinary lives in the details.',
-    image: 'https://mimuk-kahaani.vercel.app/images/momos-tikka.jpg',
+    image: '/images/momos-tikka.jpg',
   },
   {
     label: 'THE WOK',
     heading: 'The Hakka Wok',
     text: 'Hakka cuisine is the art of the wok \u2014 high heat, fast hands, bold sauces. Our Hakka dishes honor the Chinese-Indian fusion tradition born from Kolkata\u2019s Chinatown, where two ancient food cultures became one.',
-    image: 'https://mimuk-kahaani.vercel.app/images/spring-rolls.jpg',
+    image: '/images/spring-rolls.jpg',
   },
   {
     label: 'THE PLATE',
     heading: 'The Plate',
     text: 'Every dish is composed, not just cooked. Beet-radish tartare alongside black garlic tikka. Lemon masala gel with mint chutney. We plate with intention because the story begins before the first bite.',
-    image: 'https://mimuk-kahaani.vercel.app/images/dessert.jpg',
+    image: '/images/dessert.jpg',
   },
 ]
 

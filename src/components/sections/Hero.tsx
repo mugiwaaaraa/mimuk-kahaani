@@ -145,7 +145,7 @@ export default function Hero() {
         className="absolute inset-0 will-change-transform"
         style={{
           backgroundImage:
-            'url(https://mimuk-kahaani.vercel.app/images/hero-naan.jpg)',
+            'url(/images/hero-naan.jpg)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           transform: 'scale(1.15)',

@@ -95,7 +95,7 @@ export default function VisitUs() {
       <div
         className="pointer-events-none absolute inset-0"
         style={{
-          backgroundImage: 'url(https://mimuk-kahaani.vercel.app/images/exterior.jpg)',
+          backgroundImage: 'url(/images/exterior.jpg)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           opacity: 0.08,
