@@ -31,11 +31,12 @@ export default function VisitUs() {
       const details = detailsRef.current
         ? Array.from(detailsRef.current.querySelectorAll('.visit-detail'))
         : []
-      // For heading clipPath, just reveal it directly
+      // Remove clipPath so mobileReveal can handle the fade-in
       if (headingRef.current) {
         headingRef.current.style.clipPath = 'none'
+        headingRef.current.style.opacity = '0'
       }
-      return mobileReveal([subtitleRef.current, ...details], { stagger: 0.1 })
+      return mobileReveal([headingRef.current, subtitleRef.current, ...details], { stagger: 0.12 })
     }
 
     const ctx = gsap.context(() => {
