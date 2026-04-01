@@ -42,6 +42,8 @@ export default function TheCraft() {
     const section = sectionRef.current
     if (!section) return
 
+    const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0
+
     const ctx = gsap.context(() => {
       // Section heading reveal
       if (headingRef.current) {
@@ -75,6 +77,7 @@ export default function TheCraft() {
       })
 
       // Text panels fade in/out on scroll
+      // On touch: one-shot only (no reverse) to avoid direction-change jank
       panels.forEach((panel) => {
         const content = panel.querySelector('.craft-content')
         if (!content) return
@@ -90,7 +93,7 @@ export default function TheCraft() {
               trigger: panel,
               start: 'top 70%',
               end: 'top 30%',
-              toggleActions: 'play none none reverse',
+              toggleActions: isTouch ? 'play none none none' : 'play none none reverse',
             },
           }
         )

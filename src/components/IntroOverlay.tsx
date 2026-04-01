@@ -36,6 +36,9 @@ export default function IntroOverlay() {
   const svgRef = useRef<SVGSVGElement>(null)
 
   useEffect(() => {
+    // Remove CSS-only blocker now that React has hydrated
+    document.getElementById('intro-blocker')?.remove()
+
     const overlay = overlayRef.current
     const logo = logoRef.current
     const svg = svgRef.current
@@ -175,51 +178,6 @@ export default function IntroOverlay() {
           />
         ))}
 
-        {/* ── Small diamond accents on the outer ring ── */}
-        {[0, 60, 120, 180, 240, 300].map((angle) => {
-          const rad = (angle * Math.PI) / 180
-          const cx = CX + 280 * Math.cos(rad)
-          const cy = CY + 280 * Math.sin(rad)
-          return (
-            <path
-              key={`diamond-${angle}`}
-              className="draw-path"
-              d={`M${cx},${cy - 6} L${cx + 4},${cy} L${cx},${cy + 6} L${cx - 4},${cy} Z`}
-              stroke="#B8935A"
-              strokeWidth="0.5"
-              strokeOpacity="0.35"
-              fill="none"
-              style={{ opacity: 0 }}
-            />
-          )
-        })}
-
-        {/* ── Corner paisley / botanical elements ── */}
-        <path className="draw-path" style={{ opacity: 0 }} d="M100,100 C150,40 220,60 195,140 C170,220 100,195 100,100Z" stroke="#B8935A" strokeWidth="0.5" strokeOpacity="0.25" fill="none" />
-        <path className="draw-path" style={{ opacity: 0 }} d="M80,130 C55,70 140,35 175,110" stroke="#B8935A" strokeWidth="0.5" strokeOpacity="0.15" fill="none" />
-        <path className="draw-path" style={{ opacity: 0 }} d="M120,80 C160,55 185,80 165,120" stroke="#B8935A" strokeWidth="0.5" strokeOpacity="0.15" fill="none" />
-
-        <path className="draw-path" style={{ opacity: 0 }} d="M1340,100 C1290,40 1220,60 1245,140 C1270,220 1340,195 1340,100Z" stroke="#B8935A" strokeWidth="0.5" strokeOpacity="0.25" fill="none" />
-        <path className="draw-path" style={{ opacity: 0 }} d="M1360,130 C1385,70 1300,35 1265,110" stroke="#B8935A" strokeWidth="0.5" strokeOpacity="0.15" fill="none" />
-        <path className="draw-path" style={{ opacity: 0 }} d="M1320,80 C1280,55 1255,80 1275,120" stroke="#B8935A" strokeWidth="0.5" strokeOpacity="0.15" fill="none" />
-
-        <path className="draw-path" style={{ opacity: 0 }} d="M100,800 C150,860 220,840 195,760 C170,680 100,705 100,800Z" stroke="#B8935A" strokeWidth="0.5" strokeOpacity="0.25" fill="none" />
-        <path className="draw-path" style={{ opacity: 0 }} d="M80,770 C55,830 140,865 175,790" stroke="#B8935A" strokeWidth="0.5" strokeOpacity="0.15" fill="none" />
-
-        <path className="draw-path" style={{ opacity: 0 }} d="M1340,800 C1290,860 1220,840 1245,760 C1270,680 1340,705 1340,800Z" stroke="#B8935A" strokeWidth="0.5" strokeOpacity="0.25" fill="none" />
-        <path className="draw-path" style={{ opacity: 0 }} d="M1360,770 C1385,830 1300,865 1265,790" stroke="#B8935A" strokeWidth="0.5" strokeOpacity="0.15" fill="none" />
-
-        {/* ── Vine flourishes connecting corners to center ── */}
-        <path className="draw-path" style={{ opacity: 0 }} d="M200,200 C310,175 400,240 490,210 S610,320 700,340" stroke="#B8935A" strokeWidth="0.5" strokeOpacity="0.12" fill="none" />
-        <path className="draw-path" style={{ opacity: 0 }} d="M1240,200 C1130,175 1040,240 950,210 S830,320 740,340" stroke="#B8935A" strokeWidth="0.5" strokeOpacity="0.12" fill="none" />
-        <path className="draw-path" style={{ opacity: 0 }} d="M200,700 C310,725 400,660 490,690 S610,580 700,560" stroke="#B8935A" strokeWidth="0.5" strokeOpacity="0.12" fill="none" />
-        <path className="draw-path" style={{ opacity: 0 }} d="M1240,700 C1130,725 1040,660 950,690 S830,580 740,560" stroke="#B8935A" strokeWidth="0.5" strokeOpacity="0.12" fill="none" />
-
-        {/* ── Diagonal leaf sprigs near corners ── */}
-        <path className="draw-path" style={{ opacity: 0 }} d="M250,150 C270,130 290,140 280,160 C270,180 250,170 250,150Z" stroke="#B8935A" strokeWidth="0.4" strokeOpacity="0.18" fill="none" />
-        <path className="draw-path" style={{ opacity: 0 }} d="M1190,150 C1170,130 1150,140 1160,160 C1170,180 1190,170 1190,150Z" stroke="#B8935A" strokeWidth="0.4" strokeOpacity="0.18" fill="none" />
-        <path className="draw-path" style={{ opacity: 0 }} d="M250,750 C270,770 290,760 280,740 C270,720 250,730 250,750Z" stroke="#B8935A" strokeWidth="0.4" strokeOpacity="0.18" fill="none" />
-        <path className="draw-path" style={{ opacity: 0 }} d="M1190,750 C1170,770 1150,760 1160,740 C1170,720 1190,730 1190,750Z" stroke="#B8935A" strokeWidth="0.4" strokeOpacity="0.18" fill="none" />
       </svg>
 
       {/* Kahaani logo — starts fully invisible */}

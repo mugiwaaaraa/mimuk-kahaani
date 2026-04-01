@@ -46,6 +46,8 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${cormorant.variable} ${dmSans.variable}`}>
       <body className="min-h-screen antialiased">
+        {/* CSS-only blocker — hides page until IntroOverlay mounts and takes over */}
+        <div id="intro-blocker" />
         <ThemeProvider>
           <SmoothScroll>
             <ScrollProgress />

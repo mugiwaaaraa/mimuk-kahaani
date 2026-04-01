@@ -21,10 +21,18 @@
   --spacing-section-mobile: 80px;
 }
 
+/* Intro overlay — CSS-only blocker visible before React hydrates */
+#intro-blocker {
+  position: fixed;
+  inset: 0;
+  z-index: 199;
+  background: #2C3E35;
+  pointer-events: none;
+}
+
 /* Base styles */
 html {
   scroll-behavior: auto;
-  overscroll-behavior-y: none;
 }
 
 body {
@@ -32,8 +40,6 @@ body {
   color: var(--color-soft-white);
   font-family: var(--font-body), sans-serif;
   overflow-x: clip; /* clip instead of hidden — no scroll interference on iOS */
-  overscroll-behavior-y: none;
-  -webkit-overflow-scrolling: touch;
 }
 
 /* Selection color */
@@ -42,9 +48,13 @@ body {
   color: var(--color-charcoal);
 }
 
-/* Disable will-change on touch devices — causes compositor lag on mobile */
+/* Disable will-change and GPU-heavy properties on touch devices */
 @media (pointer: coarse) {
   .will-change-transform {
+    will-change: auto !important;
+  }
+  /* Prevent ScrollTrigger from adding transform-origin that fights with native scroll */
+  .gsap-will-change {
     will-change: auto !important;
   }
 }
