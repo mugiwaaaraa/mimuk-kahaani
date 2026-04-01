@@ -42,6 +42,13 @@ body {
   color: var(--color-charcoal);
 }
 
+/* Disable will-change on touch devices — causes compositor lag on mobile */
+@media (pointer: coarse) {
+  .will-change-transform {
+    will-change: auto !important;
+  }
+}
+
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
   * {
