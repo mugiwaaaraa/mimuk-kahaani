@@ -1,26 +1,128 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* Colors — Kahaani palette */
+  --color-forest: #2C3E35;
+  --color-forest-light: #3A5147;
+  --color-gold: #B8935A;
+  --color-gold-light: #D4B07A;
+  --color-charcoal: #1A1A1A;
+  --color-cream: #F5F0E8;
+  --color-soft-white: #FAFAF7;
+  --color-spice: #8B3A2F;
+  --color-sage: #4A5D52;
+
+  /* Fonts */
+  --font-cormorant: var(--font-cormorant-garamond);
+  --font-body: var(--font-dm-sans);
+
+  /* Spacing — generous luxury spacing */
+  --spacing-section: 120px;
+  --spacing-section-mobile: 80px;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Base styles */
+html {
+  scroll-behavior: auto; /* Lenis handles smooth scroll */
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-charcoal);
+  color: var(--color-soft-white);
+  font-family: var(--font-body), sans-serif;
+  overflow-x: hidden;
+}
+
+/* Selection color */
+::selection {
+  background: var(--color-gold);
+  color: var(--color-charcoal);
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Scroll progress bar */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  background: var(--color-gold);
+  z-index: 9999;
+  transform-origin: left;
+}
+
+/* Gold section divider */
+.section-divider {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--color-gold) 20%,
+    var(--color-gold) 80%,
+    transparent 100%
+  );
+  opacity: 0.3;
+}
+
+/* Scroll indicator animation */
+.scroll-line {
+  animation: scrollPulse 2.5s ease-in-out infinite;
+}
+
+@keyframes scrollPulse {
+  0%, 100% { transform: scaleY(1); opacity: 0.6; }
+  50% { transform: scaleY(1.5); opacity: 1; }
+}
+
+/* Decorative vine pattern for cream sections */
+.topo-pattern {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg width='1200' height='1200' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%232C3E35' stroke-width='1.2' stroke-linecap='round'%3E%3Cpath d='M80,200 C120,150 180,180 220,140 S300,100 340,130 S400,80 450,120' opacity='.7'/%3E%3Cpath d='M220,140 C230,160 225,185 240,200' opacity='.5'/%3E%3Cpath d='M340,130 C350,110 365,95 380,100' opacity='.5'/%3E%3Cpath d='M160,170 C155,190 165,210 150,225' opacity='.4'/%3E%3Cpath d='M900,100 C860,150 820,120 780,160 S720,130 680,170 S630,140 590,180' opacity='.7'/%3E%3Cpath d='M780,160 C790,185 775,200 785,220' opacity='.5'/%3E%3Cpath d='M680,170 C670,145 660,130 650,140' opacity='.5'/%3E%3Cpath d='M850,130 C860,155 845,175 855,190' opacity='.4'/%3E%3Cpath d='M50,650 C100,620 140,660 200,630 S280,670 340,640 S420,680 470,650' opacity='.7'/%3E%3Cpath d='M200,630 C195,610 205,590 190,575' opacity='.5'/%3E%3Cpath d='M340,640 C350,665 340,685 355,700' opacity='.5'/%3E%3Cpath d='M130,645 C125,670 135,690 120,705' opacity='.4'/%3E%3Cpath d='M1100,500 C1060,460 1020,490 980,450 S920,480 880,440' opacity='.7'/%3E%3Cpath d='M980,450 C990,470 985,495 1000,510' opacity='.5'/%3E%3Cpath d='M1050,475 C1060,500 1045,520 1055,535' opacity='.4'/%3E%3Cpath d='M700,900 C740,860 790,890 830,850 S900,880 950,850' opacity='.7'/%3E%3Cpath d='M830,850 C820,830 830,810 815,795' opacity='.5'/%3E%3Cpath d='M760,875 C755,900 765,920 750,935' opacity='.4'/%3E%3Cpath d='M200,1050 C250,1020 300,1050 350,1010 S430,1040 480,1000' opacity='.6'/%3E%3Cpath d='M350,1010 C340,990 350,970 335,955' opacity='.4'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: 1200px;
+}
+
+/* Smooth will-change hints for GSAP */
+.gsap-will-change {
+  will-change: transform, opacity;
+}
+
+/* Typography utilities */
+.heading-xl {
+  font-family: var(--font-cormorant), serif;
+  font-weight: 300;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+
+.heading-lg {
+  font-family: var(--font-cormorant), serif;
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+
+.heading-md {
+  font-family: var(--font-cormorant), serif;
+  font-weight: 400;
+  line-height: 1.15;
+}
+
+.label-sm {
+  font-family: var(--font-body), sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 3px;
 }
