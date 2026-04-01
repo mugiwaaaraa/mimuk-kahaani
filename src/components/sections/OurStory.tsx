@@ -162,7 +162,7 @@ function ChapterSection({ chapter }: { chapter: StoryChapter }) {
   return (
     <div
       ref={sectionRef}
-      className="relative flex min-h-dvh flex-col items-center justify-center px-6 py-32 lg:py-40"
+      className="relative flex min-h-svh flex-col items-center justify-center px-6 py-32 lg:py-40"
     >
       {/* Floating images — invisible by default, animated in */}
       <div

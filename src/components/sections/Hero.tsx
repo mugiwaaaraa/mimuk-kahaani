@@ -138,7 +138,7 @@ export default function Hero() {
     <section
       ref={sectionRef}
       id="hero"
-      className="relative h-dvh w-full overflow-hidden"
+      className="relative h-svh w-full overflow-hidden"
     >
       {/* Background image with parallax */}
       <div

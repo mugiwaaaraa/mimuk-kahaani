@@ -123,7 +123,7 @@ export default function TheCraft() {
       {/* Desktop: Sticky image + scrolling text overlay */}
       <div className="relative mt-20 hidden lg:block">
         {/* Sticky background — crossfading images */}
-        <div className="sticky top-0 z-0 h-dvh w-full overflow-hidden">
+        <div className="sticky top-0 z-0 h-svh w-full overflow-hidden">
           {STEPS.map((step, i) => (
             <div
               key={step.label}
@@ -146,7 +146,7 @@ export default function TheCraft() {
           {STEPS.map((step, i) => (
             <div
               key={step.label}
-              className="craft-panel flex h-dvh items-center px-16"
+              className="craft-panel flex h-svh items-center px-16"
             >
               <div className="craft-content max-w-[400px]" style={{ opacity: 0 }}>
                 <span className="font-[family-name:var(--font-dm-sans)] text-[10px] font-medium uppercase tracking-[0.2em] text-cream/40">

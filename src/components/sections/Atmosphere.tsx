@@ -148,7 +148,7 @@ export default function Atmosphere() {
     <section
       id="gallery"
       ref={sectionRef}
-      className="light-section relative min-h-dvh overflow-hidden bg-cream py-40 lg:py-52"
+      className="light-section relative min-h-svh overflow-hidden bg-cream py-40 lg:py-52"
     >
       {/* Topographic circle pattern */}
       <div className="topo-pattern" />
