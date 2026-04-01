@@ -169,13 +169,15 @@ export default function Navbar() {
             </a>
           </div>
 
-          {/* Mobile: menu button */}
+          {/* Mobile: hamburger button */}
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
-            className={`${linkClasses} text-cream/60 lg:hidden`}
+            className="flex flex-col justify-center gap-[5px] lg:hidden"
             aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
           >
-            {mobileOpen ? 'CLOSE' : 'MENU'}
+            <span className={`block h-[2px] w-6 bg-cream/80 transition-all duration-300 ${mobileOpen ? 'translate-y-[7px] rotate-45' : ''}`} />
+            <span className={`block h-[2px] w-6 bg-cream/80 transition-all duration-300 ${mobileOpen ? 'opacity-0' : ''}`} />
+            <span className={`block h-[2px] w-6 bg-cream/80 transition-all duration-300 ${mobileOpen ? '-translate-y-[7px] -rotate-45' : ''}`} />
           </button>
         </div>
       </nav>
