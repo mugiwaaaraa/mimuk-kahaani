@@ -23,14 +23,17 @@
 
 /* Base styles */
 html {
-  scroll-behavior: auto; /* Lenis handles smooth scroll */
+  scroll-behavior: auto;
+  overscroll-behavior-y: none;
 }
 
 body {
   background: var(--color-charcoal);
   color: var(--color-soft-white);
   font-family: var(--font-body), sans-serif;
-  overflow-x: hidden;
+  overflow-x: clip; /* clip instead of hidden — no scroll interference on iOS */
+  overscroll-behavior-y: none;
+  -webkit-overflow-scrolling: touch;
 }
 
 /* Selection color */

@@ -23,38 +23,26 @@ export default function SectionDivider({ fromColor, toColor }: SectionDividerPro
   const to = themeColor(toColor, theme)
 
   return (
-    <div className="relative h-24 -mt-px -mb-px" style={{ zIndex: 2 }}>
-      <svg
-        viewBox="0 0 1440 96"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-        className="absolute inset-0 w-full h-full"
-        preserveAspectRatio="none"
-      >
-        <path
-          d="M0 96V0h1440v96C1200 40 960 64 720 48 480 32 240 72 0 96Z"
-          fill={from}
-          style={{ transition: 'fill 0.3s ease' }}
-        />
-      </svg>
+    <div className="relative -mt-px -mb-px" style={{ zIndex: 2 }}>
+      {/* Bottom fill — next section color behind the curve */}
       <div
         className="absolute inset-0 -z-1"
         style={{ backgroundColor: to, transition: 'background-color 0.3s ease' }}
       />
-      {/* Gold accent line */}
+
+      {/* Smooth sine-wave curve — filled with previous section color */}
       <svg
-        viewBox="0 0 1440 96"
+        viewBox="0 0 1440 80"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        className="absolute inset-0 w-full h-full"
+        className="relative block w-full"
         preserveAspectRatio="none"
+        style={{ height: '70px' }}
       >
         <path
-          d="M0 96C240 72 480 32 720 48 960 64 1200 40 1440 96"
-          stroke="#B8935A"
-          strokeWidth="1"
-          strokeOpacity="0.3"
-          fill="none"
+          d="M0,40 C360,80 1080,0 1440,40 L1440,0 L0,0 Z"
+          fill={from}
+          style={{ transition: 'fill 0.3s ease' }}
         />
       </svg>
     </div>
