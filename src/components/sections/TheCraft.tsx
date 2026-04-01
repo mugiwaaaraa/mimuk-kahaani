@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { mobileReveal, isTouchDevice } from '@/lib/mobileReveal'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -42,10 +43,15 @@ export default function TheCraft() {
     const section = sectionRef.current
     if (!section) return
 
-    const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0
+    const isTouch = isTouchDevice()
+
+    // Mobile: use IntersectionObserver, no ScrollTrigger at all
+    if (isTouch) {
+      const contents = Array.from(section.querySelectorAll('.craft-content'))
+      return mobileReveal([headingRef.current, ...contents], { stagger: 0.08 })
+    }
 
     const ctx = gsap.context(() => {
-      // Section heading reveal
       if (headingRef.current) {
         gsap.fromTo(
           headingRef.current,
@@ -64,7 +70,6 @@ export default function TheCraft() {
         )
       }
 
-      // Scroll-driven step transitions
       const panels = section.querySelectorAll<HTMLElement>('.craft-panel')
       panels.forEach((panel, i) => {
         ScrollTrigger.create({
@@ -76,8 +81,6 @@ export default function TheCraft() {
         })
       })
 
-      // Text panels fade in/out on scroll
-      // On touch: one-shot only (no reverse) to avoid direction-change jank
       panels.forEach((panel) => {
         const content = panel.querySelector('.craft-content')
         if (!content) return
@@ -93,7 +96,7 @@ export default function TheCraft() {
               trigger: panel,
               start: 'top 70%',
               end: 'top 30%',
-              toggleActions: isTouch ? 'play none none none' : 'play none none reverse',
+              toggleActions: 'play none none reverse',
             },
           }
         )

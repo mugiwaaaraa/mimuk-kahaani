@@ -3,6 +3,7 @@
 import { useEffect, useRef } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { mobileReveal, isTouchDevice } from '@/lib/mobileReveal'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -50,10 +51,18 @@ export default function Atmosphere() {
   useEffect(() => {
     const section = sectionRef.current
     if (!section) return
-    const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0
+    const isTouch = isTouchDevice()
+
+    // Mobile: use IntersectionObserver, no ScrollTrigger
+    if (isTouch) {
+      const words = headingRef.current
+        ? Array.from(headingRef.current.querySelectorAll('.word'))
+        : []
+      const mobileImgs = Array.from(section.querySelectorAll('.mobile-gallery-img'))
+      return mobileReveal([...words, bodyRef.current, ...mobileImgs], { stagger: 0.06 })
+    }
 
     const ctx = gsap.context(() => {
-      // Heading: split into words and reveal each one
       if (headingRef.current) {
         const words = headingRef.current.querySelectorAll('.word')
         gsap.fromTo(
@@ -75,7 +84,6 @@ export default function Atmosphere() {
         )
       }
 
-      // Body text fade
       if (bodyRef.current) {
         gsap.fromTo(
           bodyRef.current,
@@ -95,7 +103,6 @@ export default function Atmosphere() {
         )
       }
 
-      // Images: rotate in from exaggerated angle, scale up, then parallax
       imageRefs.current.forEach((img, i) => {
         if (!img) return
         gsap.fromTo(
@@ -121,39 +128,17 @@ export default function Atmosphere() {
             },
           }
         )
-        // Parallax — skip on touch devices to avoid scroll jank
-        if (!isTouch) {
-          gsap.to(img, {
-            y: IMAGES[i].speed,
-            ease: 'none',
-            scrollTrigger: {
-              trigger: section,
-              start: 'top bottom',
-              end: 'bottom top',
-              scrub: true,
-            },
-          })
-        }
-      })
-
-      // Mobile images stagger in
-      const mobileImgs = section.querySelectorAll('.mobile-gallery-img')
-      gsap.fromTo(
-        mobileImgs,
-        { opacity: 0, y: 40 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.8,
-          stagger: 0.1,
-          ease: 'power3.out',
+        gsap.to(img, {
+          y: IMAGES[i].speed,
+          ease: 'none',
           scrollTrigger: {
-            trigger: mobileImgs[0]?.parentElement,
-            start: 'top 80%',
-            toggleActions: 'play none none none',
+            trigger: section,
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: true,
           },
-        }
-      )
+        })
+      })
     })
 
     return () => ctx.revert()

@@ -3,6 +3,7 @@
 import { useEffect, useRef } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { mobileReveal, isTouchDevice } from '@/lib/mobileReveal'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -24,9 +25,20 @@ export default function VisitUs() {
   useEffect(() => {
     const section = sectionRef.current
     if (!section) return
+    const isTouch = isTouchDevice()
+
+    if (isTouch) {
+      const details = detailsRef.current
+        ? Array.from(detailsRef.current.querySelectorAll('.visit-detail'))
+        : []
+      // For heading clipPath, just reveal it directly
+      if (headingRef.current) {
+        headingRef.current.style.clipPath = 'none'
+      }
+      return mobileReveal([subtitleRef.current, ...details], { stagger: 0.1 })
+    }
 
     const ctx = gsap.context(() => {
-      // Massive heading — clipPath reveal from bottom
       if (headingRef.current) {
         gsap.fromTo(
           headingRef.current,
@@ -44,7 +56,6 @@ export default function VisitUs() {
         )
       }
 
-      // Subtitle fade up
       if (subtitleRef.current) {
         gsap.fromTo(
           subtitleRef.current,
@@ -64,7 +75,6 @@ export default function VisitUs() {
         )
       }
 
-      // Details section: staggered fade up for each child
       if (detailsRef.current) {
         const children = detailsRef.current.querySelectorAll('.visit-detail')
         gsap.fromTo(

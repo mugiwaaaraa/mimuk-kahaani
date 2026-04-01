@@ -24,9 +24,10 @@ export default function Hero() {
     const bottomEls = [bottomLeftRef.current, bottomRightRef.current].filter(Boolean) as HTMLElement[]
     const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0
 
-    const ctx = gsap.context(() => {
-      // Background parallax — skip on touch devices to avoid scroll jank
-      if (!isTouch) {
+    // Background parallax — desktop only (no ScrollTrigger on mobile at all)
+    let ctx: gsap.Context | null = null
+    if (!isTouch) {
+      ctx = gsap.context(() => {
         gsap.fromTo(
           bg,
           { scale: 1.15 },
@@ -42,8 +43,8 @@ export default function Hero() {
             },
           }
         )
-      }
-    })
+      })
+    }
 
     // ── Entrance animation: triggered after intro overlay finishes ──
     let scrollCtx: gsap.Context | null = null
@@ -127,7 +128,7 @@ export default function Hero() {
     window.addEventListener('intro-complete', playEntrance)
 
     return () => {
-      ctx.revert()
+      ctx?.revert()
       scrollCtx?.revert()
       window.removeEventListener('intro-complete', playEntrance)
     }

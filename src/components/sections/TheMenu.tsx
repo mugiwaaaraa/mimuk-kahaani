@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { mobileReveal, isTouchDevice } from '@/lib/mobileReveal'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -170,9 +171,16 @@ export default function TheMenu() {
   useEffect(() => {
     const section = sectionRef.current
     if (!section) return
+    const isTouch = isTouchDevice()
+
+    if (isTouch) {
+      const menuEls = headingRef.current
+        ? Array.from(headingRef.current.querySelectorAll('.menu-reveal'))
+        : []
+      return mobileReveal([...menuEls, tabsRef.current], { stagger: 0.1 })
+    }
 
     const ctx = gsap.context(() => {
-      // Section heading reveal
       if (headingRef.current) {
         const els = headingRef.current.querySelectorAll('.menu-reveal')
         gsap.fromTo(
@@ -193,7 +201,6 @@ export default function TheMenu() {
         )
       }
 
-      // Tabs bar fade in
       if (tabsRef.current) {
         gsap.fromTo(
           tabsRef.current,

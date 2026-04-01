@@ -3,6 +3,7 @@
 import { useEffect, useRef } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { mobileReveal, isTouchDevice } from '@/lib/mobileReveal'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -76,10 +77,14 @@ function ChapterSection({ chapter }: { chapter: StoryChapter }) {
   useEffect(() => {
     const section = sectionRef.current
     if (!section) return
-    const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0
+    const isTouch = isTouchDevice()
+
+    // Mobile: use IntersectionObserver instead of ScrollTrigger
+    if (isTouch) {
+      return mobileReveal([headingRef.current, textRef.current], { stagger: 0.1 })
+    }
 
     const ctx = gsap.context(() => {
-      // Heading fade up from y:60
       if (headingRef.current) {
         gsap.fromTo(
           headingRef.current,
@@ -98,7 +103,6 @@ function ChapterSection({ chapter }: { chapter: StoryChapter }) {
         )
       }
 
-      // Images: fade + scale + rotate in, then parallax
       const imgs = [img1Ref.current, img2Ref.current]
       imgs.forEach((img, i) => {
         if (!img) return
@@ -120,22 +124,18 @@ function ChapterSection({ chapter }: { chapter: StoryChapter }) {
             },
           }
         )
-        // Parallax — skip on touch devices to avoid scroll jank
-        if (!isTouch) {
-          gsap.to(img, {
-            y: i === 0 ? '-15%' : '-25%',
-            ease: 'none',
-            scrollTrigger: {
-              trigger: section,
-              start: 'top bottom',
-              end: 'bottom top',
-              scrub: true,
-            },
-          })
-        }
+        gsap.to(img, {
+          y: i === 0 ? '-15%' : '-25%',
+          ease: 'none',
+          scrollTrigger: {
+            trigger: section,
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: true,
+          },
+        })
       })
 
-      // Body text fade up
       if (textRef.current) {
         gsap.fromTo(
           textRef.current,
@@ -217,8 +217,16 @@ export default function OurStory() {
   const triptychRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
+    const isTouch = isTouchDevice()
+
+    if (isTouch) {
+      const triptychImgs = triptychRef.current
+        ? Array.from(triptychRef.current.querySelectorAll('.triptych-img'))
+        : []
+      return mobileReveal([labelRef.current, ...triptychImgs], { stagger: 0.08 })
+    }
+
     const ctx = gsap.context(() => {
-      // Section label fade in
       if (labelRef.current) {
         gsap.fromTo(
           labelRef.current,
@@ -237,7 +245,6 @@ export default function OurStory() {
         )
       }
 
-      // Triptych images stagger in
       if (triptychRef.current) {
         const images = triptychRef.current.querySelectorAll('.triptych-img')
         gsap.fromTo(

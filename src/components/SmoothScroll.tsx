@@ -14,9 +14,8 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
     const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0
 
     if (isTouch) {
-      // On touch devices, tell ScrollTrigger to not interfere with native scroll
-      ScrollTrigger.config({ ignoreMobileResize: true, limitCallbacks: true })
-      ScrollTrigger.normalizeScroll(false)
+      // On touch devices, do NOT use ScrollTrigger at all.
+      // Components use IntersectionObserver (via mobileReveal) instead.
       return
     }
 

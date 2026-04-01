@@ -80,6 +80,17 @@ export default function Navbar() {
   const navRef = useRef<HTMLElement>(null)
 
   useEffect(() => {
+    const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0
+
+    if (isTouch) {
+      // On mobile, use a simple passive scroll listener instead of ScrollTrigger
+      function onScroll() {
+        setScrolled(window.scrollY > 100)
+      }
+      window.addEventListener('scroll', onScroll, { passive: true })
+      return () => window.removeEventListener('scroll', onScroll)
+    }
+
     const ctx = gsap.context(() => {
       ScrollTrigger.create({
         trigger: document.body,

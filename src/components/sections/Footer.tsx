@@ -3,6 +3,7 @@
 import { useEffect, useRef } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { mobileReveal, isTouchDevice } from '@/lib/mobileReveal'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -21,8 +22,16 @@ export default function Footer() {
   const contentRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
+    const isTouch = isTouchDevice()
+
+    if (isTouch) {
+      const footerItems = contentRef.current
+        ? Array.from(contentRef.current.querySelectorAll('.footer-item'))
+        : []
+      return mobileReveal([wordmarkRef.current, ...footerItems], { stagger: 0.1 })
+    }
+
     const ctx = gsap.context(() => {
-      // Wordmark: scale up from small
       if (wordmarkRef.current) {
         gsap.fromTo(
           wordmarkRef.current,
@@ -42,7 +51,6 @@ export default function Footer() {
         )
       }
 
-      // Footer content stagger
       if (contentRef.current) {
         const children = contentRef.current.querySelectorAll('.footer-item')
         gsap.fromTo(
