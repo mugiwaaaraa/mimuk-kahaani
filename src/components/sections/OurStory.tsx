@@ -76,6 +76,7 @@ function ChapterSection({ chapter }: { chapter: StoryChapter }) {
   useEffect(() => {
     const section = sectionRef.current
     if (!section) return
+    const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0
 
     const ctx = gsap.context(() => {
       // Heading fade up from y:60
@@ -119,17 +120,19 @@ function ChapterSection({ chapter }: { chapter: StoryChapter }) {
             },
           }
         )
-        // Parallax — each image at different speed (15% range)
-        gsap.to(img, {
-          y: i === 0 ? '-15%' : '-25%',
-          ease: 'none',
-          scrollTrigger: {
-            trigger: section,
-            start: 'top bottom',
-            end: 'bottom top',
-            scrub: true,
-          },
-        })
+        // Parallax — skip on touch devices to avoid scroll jank
+        if (!isTouch) {
+          gsap.to(img, {
+            y: i === 0 ? '-15%' : '-25%',
+            ease: 'none',
+            scrollTrigger: {
+              trigger: section,
+              start: 'top bottom',
+              end: 'bottom top',
+              scrub: true,
+            },
+          })
+        }
       })
 
       // Body text fade up

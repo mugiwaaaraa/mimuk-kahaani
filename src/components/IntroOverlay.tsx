@@ -227,7 +227,7 @@ export default function IntroOverlay() {
         ref={logoRef}
         src="/images/logo.png"
         alt="Kahaani"
-        className="relative z-10 h-24 w-auto lg:h-32"
+        className="relative z-10 h-36 w-auto sm:h-44 lg:h-52"
         style={{ opacity: 0 }}
       />
     </div>

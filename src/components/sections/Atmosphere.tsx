@@ -50,6 +50,7 @@ export default function Atmosphere() {
   useEffect(() => {
     const section = sectionRef.current
     if (!section) return
+    const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0
 
     const ctx = gsap.context(() => {
       // Heading: split into words and reveal each one
@@ -120,17 +121,19 @@ export default function Atmosphere() {
             },
           }
         )
-        // Parallax at different speeds
-        gsap.to(img, {
-          y: IMAGES[i].speed,
-          ease: 'none',
-          scrollTrigger: {
-            trigger: section,
-            start: 'top bottom',
-            end: 'bottom top',
-            scrub: true,
-          },
-        })
+        // Parallax — skip on touch devices to avoid scroll jank
+        if (!isTouch) {
+          gsap.to(img, {
+            y: IMAGES[i].speed,
+            ease: 'none',
+            scrollTrigger: {
+              trigger: section,
+              start: 'top bottom',
+              end: 'bottom top',
+              scrub: true,
+            },
+          })
+        }
       })
 
       // Mobile images stagger in

@@ -22,33 +22,33 @@ export default function Hero() {
 
     const lines = [line1Ref.current, line2Ref.current, line3Ref.current].filter(Boolean) as HTMLDivElement[]
     const bottomEls = [bottomLeftRef.current, bottomRightRef.current].filter(Boolean) as HTMLElement[]
+    const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0
 
     const ctx = gsap.context(() => {
-      // Background parallax: slow scale-down + y shift on scroll
-      gsap.fromTo(
-        bg,
-        { scale: 1.15 },
-        {
-          scale: 1.0,
-          y: '15%',
-          ease: 'none',
-          scrollTrigger: {
-            trigger: section,
-            start: 'top top',
-            end: 'bottom top',
-            scrub: true,
-          },
-        }
-      )
+      // Background parallax — skip on touch devices to avoid scroll jank
+      if (!isTouch) {
+        gsap.fromTo(
+          bg,
+          { scale: 1.15 },
+          {
+            scale: 1.0,
+            y: '15%',
+            ease: 'none',
+            scrollTrigger: {
+              trigger: section,
+              start: 'top top',
+              end: 'bottom top',
+              scrub: true,
+            },
+          }
+        )
+      }
     })
 
     // ── Entrance animation: triggered after intro overlay finishes ──
-    // Scroll-linked fade is created AFTER entrance completes so it
-    // doesn't force opacity:1 before the intro is done.
     let scrollCtx: gsap.Context | null = null
 
     function playEntrance() {
-      // Staggered fade-in for each line of hero text
       const totalDelay = lines.length * 0.2
 
       lines.forEach((line, i) => {
@@ -65,7 +65,6 @@ export default function Hero() {
         )
       })
 
-      // Bottom bar fades in after text
       bottomEls.forEach((el, i) => {
         gsap.fromTo(
           el,
@@ -80,50 +79,51 @@ export default function Hero() {
         )
       })
 
-      // After entrance finishes, attach scroll-linked fade
-      const entranceDuration = totalDelay + 0.8 + 0.2 // last line delay + duration + buffer
-      setTimeout(() => {
-        scrollCtx = gsap.context(() => {
-          lines.forEach((line) => {
-            gsap.fromTo(
-              line,
-              { opacity: 1, y: 0 },
-              {
-                opacity: 0,
-                y: -30,
-                ease: 'none',
-                scrollTrigger: {
-                  trigger: section,
-                  start: 'top top',
-                  end: 'bottom 60%',
-                  scrub: true,
-                },
-              }
-            )
-          })
+      // Scroll-linked fade — only on non-touch devices
+      if (!isTouch) {
+        const entranceDuration = totalDelay + 0.8 + 0.2
+        setTimeout(() => {
+          scrollCtx = gsap.context(() => {
+            lines.forEach((line) => {
+              gsap.fromTo(
+                line,
+                { opacity: 1, y: 0 },
+                {
+                  opacity: 0,
+                  y: -30,
+                  ease: 'none',
+                  scrollTrigger: {
+                    trigger: section,
+                    start: 'top top',
+                    end: 'bottom 60%',
+                    scrub: true,
+                  },
+                }
+              )
+            })
 
-          bottomEls.forEach((el) => {
-            gsap.fromTo(
-              el,
-              { opacity: 1, y: 0 },
-              {
-                opacity: 0,
-                y: -20,
-                ease: 'none',
-                scrollTrigger: {
-                  trigger: section,
-                  start: 'top top',
-                  end: 'bottom 60%',
-                  scrub: true,
-                },
-              }
-            )
+            bottomEls.forEach((el) => {
+              gsap.fromTo(
+                el,
+                { opacity: 1, y: 0 },
+                {
+                  opacity: 0,
+                  y: -20,
+                  ease: 'none',
+                  scrollTrigger: {
+                    trigger: section,
+                    start: 'top top',
+                    end: 'bottom 60%',
+                    scrub: true,
+                  },
+                }
+              )
+            })
           })
-        })
-      }, entranceDuration * 1000)
+        }, entranceDuration * 1000)
+      }
     }
 
-    // Listen for intro overlay completion
     window.addEventListener('intro-complete', playEntrance)
 
     return () => {
